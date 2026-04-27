@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEES10 | Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-panel: #141414;
+            --bg-card: #1f1f1f;
+            --accent: #f59e0b; /* Amber/Honey */
+            --accent-hover: #d97706;
+            --accent-glow: rgba(245, 158, 11, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #2dd4bf20;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-panel);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 3rem;
+        }
+
+        .brand-icon {
+            background: linear-gradient(135deg, var(--accent), #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 3rem 4rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #fbbf24);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-body p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* Git Button */
+        .btn-commit {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-commit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-commit:active {
+            transform: scale(0.98);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,0.3);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Status message */
+        .status-msg {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status-msg.success {
+            color: var(--success);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">🐝</span>
+            BEES10 CMS
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active">
+                <span>📊</span> Dashboard
+            </li>
+            <li class="nav-item">
+                <span>📝</span> Contenidos
+            </li>
+            <li class="nav-item">
+                <span>📁</span> Archivos
+            </li>
+            <li class="nav-item">
+                <span>⚙️</span> Ajustes
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Panel de Control</h1>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Admin</span>
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold;">A</div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- GitHub Sync Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-title">Sincronización GitHub</div>
+                </div>
+                <div class="card-body">
+                    <p>Sube los cambios locales del directorio <strong>/public/</strong> al repositorio remoto para actualizar la web en vivo automáticamente en Netlify.</p>
+                    
+                    <button class="btn-commit" id="commitBtn">
+                        <span class="btn-text">Realizar Commit a GitHub</span>
+                        <div class="spinner" id="btnSpinner"></div>
+                    </button>
+                    
+                    <div class="status-msg" id="statusMsg">
+                        <span>✅</span> ¡Cambios subidos exitosamente!
+                    </div>
+                </div>
+            </div>
+
+            <!-- More cards can be added here -->
+            <div class="card" style="opacity: 0.5;">
+                <div class="card-header">
+                    <div class="card-icon">📄</div>
+                    <div class="card-title">Páginas (Pronto)</div>
+                </div>
+                <div class="card-body">
+                    <p>Gestiona el contenido de las páginas de tu sitio web desde este módulo próximamente.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('commitBtn').addEventListener('click', function() {
+            const btn = this;
+            const btnText = btn.querySelector('.btn-text');
+            const spinner = document.getElementById('btnSpinner');
+            const statusMsg = document.getElementById('statusMsg');
+
+            // Simular estado de carga
+            btnText.style.display = 'none';
+            spinner.style.display = 'block';
+            btn.style.pointerEvents = 'none';
+            statusMsg.classList.remove('success');
+
+            // Realizar llamada a nuestra API local
+            fetch('/api/commit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                spinner.style.display = 'none';
+                btnText.style.display = 'block';
+                btnText.textContent = 'Actualizar de nuevo';
+                btn.style.pointerEvents = 'auto';
+                
+                if (data.success) {
+                    statusMsg.innerHTML = `<span>✅</span> ${data.message}`;
+                    statusMsg.classList.add('success');
+                    statusMsg.style.color = 'var(--success)';
+                } else {
+                    statusMsg.innerHTML = `<span>❌</span> ${data.error}`;
+                    statusMsg.classList.add('success'); // Reusing class for visibility
+                    statusMsg.style.color = '#ef4444'; // Red error color
+                }
+                
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    statusMsg.classList.remove('success');
+                }, 5000);
+            })
+            .catch(error => {
+                spinner.style.display = 'none';
+                btnText.style.display = 'block';
+                btn.style.pointerEvents = 'auto';
+                
+                statusMsg.innerHTML = `<span>❌</span> Error de conexión con el servidor.`;
+                statusMsg.classList.add('success');
+                statusMsg.style.color = '#ef4444';
+                
+                setTimeout(() => {
+                    statusMsg.classList.remove('success');
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>

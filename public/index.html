@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BEES10 | Biblioteca Escolar</title>
+    <title>BEES10 | Biblioteca Escolar de la EES10 | Claromecó</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #050505;
@@ -14,6 +17,7 @@
             --text: #ffffff;
             --muted: #666666;
         }
+
         body {
             margin: 0;
             background-color: var(--bg);
@@ -25,10 +29,12 @@
             height: 100vh;
             text-align: center;
         }
+
         .container {
             max-width: 600px;
             padding: 2rem;
         }
+
         h1 {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 4rem;
@@ -36,6 +42,7 @@
             margin-bottom: 0.5rem;
             text-transform: uppercase;
         }
+
         p {
             font-size: 1.1rem;
             color: var(--muted);
@@ -43,6 +50,7 @@
             max-width: 450px;
             margin: 0 auto;
         }
+
         .loader {
             width: 40px;
             height: 4px;
@@ -51,6 +59,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .loader::after {
             content: '';
             position: absolute;
@@ -59,17 +68,25 @@
             background: var(--accent);
             animation: slide 1.5s infinite ease-in-out;
         }
+
         @keyframes slide {
-            0% { left: -20px; }
-            100% { left: 40px; }
+            0% {
+                left: -20px;
+            }
+
+            100% {
+                left: 40px;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>BEES10</h1>
-        <p>Un espacio de aprendizaje, tecnología y libros. Estamos construyendo la nueva biblioteca escolar digital.</p>
+        <h1>Sitio web de la Biblioteca de la EES10</h1>
+        <p>¡Pronto!</p>
         <div class="loader"></div>
     </div>
 </body>
+
 </html>
