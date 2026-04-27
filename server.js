@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { exec } = require('child_process');
 const path = require('path');
@@ -16,9 +17,18 @@ app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 // Endpoint para realizar el commit y push a GitHub
 app.post('/api/commit', (req, res) => {
-    // El comando agrega todos los cambios, hace commit y sube al repositorio remoto.
-    const command = `git add . && git commit -m "Actualización desde el CMS Panel de Control" && git push`;
+    const githubUser = process.env.GITHUB_USERNAME;
+    const githubToken = process.env.GITHUB_TOKEN;
+    const repoPath = 'github.com/debiander/bees10.git';
+    
+    let pushCommand = 'git push';
+    if (githubUser && githubToken) {
+        pushCommand = `git push https://${githubUser}:${githubToken}@${repoPath}`;
+    }
 
+    // El comando agrega todos los cambios, hace commit y sube al repositorio remoto.
+    // Usamos '|| true' en el commit para que no falle si no hay cambios nuevos pero sí hay commits pendientes de empujar.
+    const command = `git add . && (git commit -m "Actualización desde el CMS Panel de Control" || true) && ${pushCommand}`;
     exec(command, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error de Git: ${error.message}`);
