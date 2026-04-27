@@ -1,2 +1,6 @@
-node_modules/
-.env
+# Ignorar todo
+/*
+
+# Excepciones (archivos que sí van a GitHub)
+!/public/
+!.gitignore
