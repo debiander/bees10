@@ -237,6 +237,73 @@
             color: var(--success);
             opacity: 1;
         }
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-icon.loading {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .modal-message {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -305,18 +372,36 @@
         </div>
     </main>
 
+    <!-- Modal de Feedback -->
+    <div class="modal-overlay" id="feedbackModal">
+        <div class="modal-content">
+            <div class="modal-icon loading" id="modalIcon">⏳</div>
+            <h3 class="modal-title" id="modalTitle">Sincronizando...</h3>
+            <p class="modal-message" id="modalMessage">Por favor, espera mientras se suben los cambios.</p>
+        </div>
+    </div>
     <script>
         document.getElementById('commitBtn').addEventListener('click', function() {
             const btn = this;
             const btnText = btn.querySelector('.btn-text');
             const spinner = document.getElementById('btnSpinner');
-            const statusMsg = document.getElementById('statusMsg');
+            
+            const modal = document.getElementById('feedbackModal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
 
-            // Simular estado de carga
+            // Simular estado de carga en botón
             btnText.style.display = 'none';
             spinner.style.display = 'block';
             btn.style.pointerEvents = 'none';
-            statusMsg.classList.remove('success');
+
+            // Mostrar modal de carga
+            modalIcon.textContent = '⏳';
+            modalIcon.className = 'modal-icon loading';
+            modalTitle.textContent = 'Sincronizando...';
+            modalMessage.textContent = 'Estamos subiendo los archivos a GitHub. Por favor espera.';
+            modal.classList.add('active');
 
             // Realizar llamada a nuestra API local
             fetch('/api/commit', {
@@ -325,38 +410,45 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Restaurar botón
                 spinner.style.display = 'none';
                 btnText.style.display = 'block';
                 btnText.textContent = 'Actualizar de nuevo';
                 btn.style.pointerEvents = 'auto';
                 
+                // Actualizar modal con resultado
+                modalIcon.className = 'modal-icon';
                 if (data.success) {
-                    statusMsg.innerHTML = `<span>✅</span> ${data.message}`;
-                    statusMsg.classList.add('success');
-                    statusMsg.style.color = 'var(--success)';
+                    modalIcon.textContent = '✅';
+                    modalTitle.textContent = '¡Completado!';
+                    modalMessage.textContent = data.message;
                 } else {
-                    statusMsg.innerHTML = `<span>❌</span> ${data.error}`;
-                    statusMsg.classList.add('success'); // Reusing class for visibility
-                    statusMsg.style.color = '#ef4444'; // Red error color
+                    modalIcon.textContent = '❌';
+                    modalTitle.textContent = 'Error';
+                    modalMessage.textContent = data.error;
                 }
                 
-                // Ocultar mensaje después de 5 segundos
+                // Cerrar modal automáticamente después de 3 segundos
                 setTimeout(() => {
-                    statusMsg.classList.remove('success');
-                }, 5000);
+                    modal.classList.remove('active');
+                }, 3000);
             })
             .catch(error => {
+                // Restaurar botón
                 spinner.style.display = 'none';
                 btnText.style.display = 'block';
                 btn.style.pointerEvents = 'auto';
                 
-                statusMsg.innerHTML = `<span>❌</span> Error de conexión con el servidor.`;
-                statusMsg.classList.add('success');
-                statusMsg.style.color = '#ef4444';
+                // Actualizar modal con error de red
+                modalIcon.className = 'modal-icon';
+                modalIcon.textContent = '⚠️';
+                modalTitle.textContent = 'Error de conexión';
+                modalMessage.textContent = 'No se pudo conectar con el servidor local.';
                 
+                // Cerrar modal automáticamente después de 3 segundos
                 setTimeout(() => {
-                    statusMsg.classList.remove('success');
-                }, 5000);
+                    modal.classList.remove('active');
+                }, 3000);
             });
         });
     </script>
