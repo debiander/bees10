@@ -511,22 +511,56 @@
     </footer>
 
     <script>
-        let details = {};
-
-        // Cargar contenidos dinámicos
-        fetch('/api/content')
-            .then(res => res.json())
-            .then(data => {
-                details = data;
-            })
-            .catch(err => console.error('Error al cargar contenidos:', err));
+        const details = {
+            intro: {
+                title: "Introducción",
+                content: `
+                    <p>Una biblioteca sin iniciativa permanece aislada y pierde la capacidad para proveer acceso e incidir en el ciclo de gestión de la información. Esta es nuestra misión principal.</p>
+                    <h4>Objetivo</h4>
+                    <p>Posicionar la biblioteca como un centro de recursos para el aprendizaje que sea reconocido por la comunidad educativa.</p>
+                    <h4>Metodología</h4>
+                    <p>Impulsamos un ciclo de mejora continua: diagnóstico, planificación, implementación y evaluación, con espacio para el aprendizaje constante.</p>
+                `
+            },
+            acc: {
+                title: "Accesibilidad",
+                content: `
+                    <p>La accesibilidad es la red caminera para el conocimiento. Trabajamos para que todos los destinos sean alcanzables.</p>
+                    <h4>¿Cómo colaboramos?</h4>
+                    <ul>
+                        <li>Dibujamos los mapas de los recursos.</li>
+                        <li>Señalizamos las rutas y su dificultad.</li>
+                        <li>Mantenemos los senderos secundarios.</li>
+                        <li>Elaboramos guías de viaje detalladas.</li>
+                    </ul>
+                    <h4>Agendas de Trabajo</h4>
+                    <p>Análisis documental, desarrollo de colecciones y comunicación estratégica.</p>
+                `
+            },
+            alf: {
+                title: "Alfabetización",
+                content: `
+                    <p>Aprender a orientarse en la soledad de la lectura y conducir la propia experiencia.</p>
+                    <h4>El Campamento</h4>
+                    <p>Proveemos el equipo básico: enseñamos a usar la brújula y damos el pronóstico del tiempo para el viaje intelectual.</p>
+                    <h4>Senderos Inmersivos</h4>
+                    <p>Experiencias diseñadas para luchar contra la apatía, desde moldear tablillas de arcilla hasta el uso de microscopios.</p>
+                `
+            },
+            ext: {
+                title: "Extensión",
+                content: `
+                    <p>La biblioteca como centro de interpretación que acorta la distancia entre la experiencia individual y el patrimonio colectivo.</p>
+                    <h4>Articulación Local</h4>
+                    <p>Conectamos con instituciones como CRESTA y actores locales para que la extensión se inscriba en la vida social y territorial.</p>
+                    <h4>Zonas de Encuentro</h4>
+                    <p>Espacios de superposición donde leer, hablar y producir se mezclan en tiempo real para generar pensamiento colectivo.</p>
+                `
+            }
+        };
 
         function openModal(key) {
             const data = details[key];
-            if (!data) {
-                console.warn('Contenido no cargado para:', key);
-                return;
-            }
             const body = document.getElementById('modal-body');
             body.innerHTML = `
                 <h2>${data.title}</h2>
