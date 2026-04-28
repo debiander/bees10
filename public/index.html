@@ -153,6 +153,7 @@
             align-items: center;
             gap: 10px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: left;
         }
 
         .brand:hover {
@@ -183,6 +184,69 @@
 
         .nav-links a:hover {
             color: var(--primary);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 10000;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-main);
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 2rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: right 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+                z-index: 9998;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+
+            /* Hamburger Animation */
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
         }
 
         /* Content Sections */
@@ -218,7 +282,7 @@
         .feature-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 24px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
@@ -248,21 +312,47 @@
             opacity: 0.15;
         }
 
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
             display: block;
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
             color: var(--text-main);
         }
 
         .feature-card p {
             color: var(--text-muted);
             font-size: 0.95rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .feature-card p {
+                max-height: 0;
+                overflow: hidden;
+                margin-top: 0;
+                opacity: 0;
+                transition: all 0.4s ease-out;
+            }
+            
+            .feature-card.expanded p {
+                max-height: 200px;
+                margin-top: 1.5rem;
+                opacity: 1;
+            }
+
+            .feature-card.expanded {
+                border-color: var(--primary);
+            }
         }
 
         /* Documents Section */
@@ -431,11 +521,16 @@
 
     <nav class="glass">
         <a href="#" class="brand">🐝 BEES<span>10</span></a>
-        <ul class="nav-links">
-            <li><a onclick="openModal('intro')">Intro</a></li>
-            <li><a onclick="openModal('acc')">Accesibilidad</a></li>
-            <li><a onclick="openModal('alf')">Alfabetización</a></li>
-            <li><a onclick="openModal('ext')">Extensión</a></li>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a onclick="closeMenu(); openModal('intro')">Intro</a></li>
+            <li><a onclick="closeMenu(); openModal('acc')">Accesibilidad</a></li>
+            <li><a onclick="closeMenu(); openModal('alf')">Alfabetización</a></li>
+            <li><a onclick="closeMenu(); openModal('ext')">Extensión</a></li>
         </ul>
     </nav>
 
@@ -456,21 +551,27 @@
         </div>
 
         <div class="features-grid">
-            <div class="feature-card" onclick="openModal('acc')">
-                <span class="feature-icon">♿</span>
-                <h3>Accesibilidad</h3>
+            <div class="feature-card" onclick="handleCardClick(event, 'acc')">
+                <div class="card-header">
+                    <span class="feature-icon">♿</span>
+                    <h3>Accesibilidad</h3>
+                </div>
                 <p>Iniciativas orientadas a garantizar que el conocimiento y los recursos de la biblioteca estén
                     disponibles para todos, eliminando barreras físicas y digitales.</p>
             </div>
-            <div class="feature-card" onclick="openModal('alf')">
-                <span class="feature-icon">📚</span>
-                <h3>Alfabetización</h3>
+            <div class="feature-card" onclick="handleCardClick(event, 'alf')">
+                <div class="card-header">
+                    <span class="feature-icon">📚</span>
+                    <h3>Alfabetización</h3>
+                </div>
                 <p>Propuestas de formación y fomento de la lectura, integrando nuevas tecnologías y métodos pedagógicos
                     para potenciar el hábito lector.</p>
             </div>
-            <div class="feature-card" onclick="openModal('ext')">
-                <span class="feature-icon">🌟</span>
-                <h3>Extensión</h3>
+            <div class="feature-card" onclick="handleCardClick(event, 'ext')">
+                <div class="card-header">
+                    <span class="feature-icon">🌟</span>
+                    <h3>Extensión</h3>
+                </div>
                 <p>Proyectos que trascienden las paredes de la biblioteca para conectar con la comunidad de Claromecó y
                     otras instituciones educativas.</p>
             </div>
@@ -554,6 +655,30 @@
                 `
             }
         };
+
+        // Hamburger Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleCardClick(event, key) {
+            if (window.innerWidth <= 768) {
+                event.currentTarget.classList.toggle('expanded');
+            } else {
+                openModal(key);
+            }
+        }
 
         function openModal(key) {
             const data = details[key];
