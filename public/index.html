@@ -538,6 +538,7 @@
             <li><a onclick="closeMenu(); openModal('acc')">Accesibilidad</a></li>
             <li><a onclick="closeMenu(); openModal('alf')">Alfabetización</a></li>
             <li><a onclick="closeMenu(); openModal('ext')">Extensión</a></li>
+            <li><a href="log.html" style="color: var(--primary);">Novedades</a></li>
         </ul>
     </nav>
 
@@ -706,6 +707,11 @@
         // Close on Esc
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
+        });
+
+        // Close on click outside
+        window.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal')) closeModal();
         });
 
         // Reveal animations

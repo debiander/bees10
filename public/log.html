@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Información | BEES10</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --bg-dark: #050505;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        aside {
+            padding: 3rem 2rem;
+            border-right: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.01);
+            overflow-y: auto;
+        }
+
+        .brand {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+        }
+
+        .brand span {
+            color: var(--primary);
+        }
+
+        .filter-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-section h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .filter-list {
+            list-style: none;
+        }
+
+        .filter-item {
+            padding: 8px 0;
+            color: #fff;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .filter-item:hover {
+            color: var(--primary);
+        }
+
+        .filter-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Main Feed */
+        main {
+            padding: 4rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            margin-bottom: 4rem;
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .log-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 900px;
+        }
+
+        .log-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 2rem;
+        }
+
+        .log-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .log-card .volanta {
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .log-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .log-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .log-card .meta {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .log-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #111;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                display: none;
+            }
+
+            .log-card {
+                grid-template-columns: 1fr;
+            }
+
+            .log-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        /* Hidden by default scrollbars */
+        body::-webkit-scrollbar,
+        main::-webkit-scrollbar,
+        aside::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <aside>
+        <a href="index.html" class="brand">🐝 BEES<span>10</span></a>
+
+        <div class="filter-section">
+            <h4>Tiempo</h4>
+            <ul class="filter-list">
+                <li class="filter-item active" onclick="filterByTime('all')">Todo</li>
+                <li class="filter-item" onclick="filterByTime('day')">Último día</li>
+                <li class="filter-item" onclick="filterByTime('week')">Última semana</li>
+                <li class="filter-item" onclick="filterByTime('month')">Último mes</li>
+            </ul>
+        </div>
+
+        <div class="filter-section">
+            <h4>Tags</h4>
+            <ul class="filter-list" id="tag-filters">
+
+                <li class="filter-item" onclick="filterByTag('debates')">debates</li>
+
+                <li class="filter-item" onclick="filterByTag('alfabetización')">alfabetización</li>
+
+                <li class="filter-item" onclick="filterByTag('violencias')">violencias</li>
+
+            </ul>
+        </div>
+    </aside>
+
+    <main>
+        <header>
+            <h1>Centro de Información</h1>
+            <p>Directivos y Docentes | EES10 Claromecó</p>
+        </header>
+
+        <div class="log-grid" id="log-grid">
+
+            <a href="log/ciclo-de-debates-1777383715235.html" class="log-card" data-date="2026-04-28T13:41:55.235Z"
+                data-tags="debates,alfabetización,violencias">
+                <div>
+                    <div class="volanta">Una forma de impulsar la lectura, la escritura, la oralidad y la ciudadanía
+                    </div>
+                    <h2>Ciclo de debates</h2>
+                    <p>Comenzamos con la realización del ciclo de debates el jueves de la semana pasada. El tema fue:
+                        las situaciones de amenazas por tiroteo en las escuelas secundarias del país y su relación con
+                        las redes ...</p>
+                    <div class="meta">28/4/2026</div>
+                </div>
+                <img src="/assets/log/2026-04-28/1777383715184.jpg" class="log-image">
+            </a>
+
+        </div>
+    </main>
+
+    <script>
+        function filterByTime(range) {
+            // This is a static site, but we can do client-side filtering on top of static content
+            // or just reload with a query param if we had a backend.
+            // Since it's SSG, I'll add a simple client-side filter logic here.
+            const cards = document.querySelectorAll('.log-card');
+            const now = new Date();
+
+            cards.forEach(card => {
+                const date = new Date(card.dataset.date);
+                const diff = (now - date) / (1000 * 60 * 60 * 24); // days
+
+                let show = true;
+                if (range === 'day') show = diff <= 1;
+                if (range === 'week') show = diff <= 7;
+                if (range === 'month') show = diff <= 30;
+
+                card.style.display = show ? 'grid' : 'none';
+            });
+
+            updateActiveFilter(event.target);
+        }
+
+        function filterByTag(tag) {
+            const cards = document.querySelectorAll('.log-card');
+            cards.forEach(card => {
+                const tags = card.dataset.tags.split(',');
+                card.style.display = (tag === 'all' || tags.includes(tag)) ? 'grid' : 'none';
+            });
+            updateActiveFilter(event.target);
+        }
+
+        function updateActiveFilter(el) {
+            document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
