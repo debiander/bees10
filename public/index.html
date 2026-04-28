@@ -39,6 +39,13 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
+            /* Hide scrollbar */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
         }
 
         h1,
