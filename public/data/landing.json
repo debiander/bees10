@@ -1,0 +1,72 @@
+{
+  "hero": {
+    "title": "Punta Lectura",
+    "subtitle": "Propuesta integral de gestión bibliotecaria para la Biblioteca de la Escuela Secundaria Nº 10 de Claromecó. <br/>Un ecosistema dinámico para la lectura y el aprendizaje."
+  },
+  "intro": {
+    "title": "Gestión de la BEES10",
+    "description": "Este sitio web incluye información esencial para conocer los principales flujos de trabajo de la Biblioteca de la EES10 de Claromecó. <br/>Se trata de un documento vivo, en permanente elaboración."
+  },
+  "features": [
+    {
+      "id": "acc",
+      "icon": "♿",
+      "title": "Accesibilidad",
+      "description": "Iniciativas orientadas a garantizar que el conocimiento y los recursos de la biblioteca estén disponibles para todos, eliminando barreras físicas y digitales."
+    },
+    {
+      "id": "alf",
+      "icon": "📚",
+      "title": "Alfabetización",
+      "description": "Propuestas de formación y fomento de la lectura, integrando nuevas tecnologías y métodos pedagógicos para potenciar el hábito lector."
+    },
+    {
+      "id": "ext",
+      "icon": "🌟",
+      "title": "Extensión",
+      "description": "Proyectos que trascienden las paredes de la biblioteca para conectar con la comunidad de Claromecó y otras instituciones educativas."
+    }
+  ],
+  "modals": {
+    "intro": {
+      "title": "Introducción",
+      "content": "<p>Una biblioteca sin iniciativa permanece aislada y pierde la capacidad para proveer acceso e incidir en el ciclo de gestión de la información. Esta es nuestra misión principal.</p><h4>Objetivo</h4><p>Posicionar la biblioteca como un centro de recursos para el aprendizaje que sea reconocido por la comunidad educativa.</p><h4>Metodología</h4><p>Impulsamos un ciclo de mejora continua: diagnóstico, planificación, implementación y evaluación, con espacio para el aprendizaje constante.</p>"
+    },
+    "acc": {
+      "title": "Accesibilidad",
+      "content": "<p>La accesibilidad es la red caminera para el conocimiento. Trabajamos para que todos los destinos sean alcanzables.</p><h4>¿Cómo colaboramos?</h4><ul><li>Dibujamos los mapas de los recursos.</li><li>Señalizamos las rutas y su dificultad.</li><li>Mantenemos los senderos secundarios.</li><li>Elaboramos guías de viaje detalladas.</li><li>Agendas de Trabajo</h4><p>Análisis documental, desarrollo de colecciones y comunicación estratégica.</p>"
+    },
+    "alf": {
+      "title": "Alfabetización",
+      "content": "<p>Aprender a orientarse en la soledad de la lectura y conducir la propia experiencia.</p><h4>El Campamento</h4><p>Proveemos el equipo básico: enseñamos a usar la brújula y damos el pronóstico del tiempo para el viaje intelectual.</p><h4>Senderos Inmersivos</h4><p>Experiencias diseñadas para luchar contra la apatía, desde moldear tablillas de arcilla hasta el uso de microscopios.</p>"
+    },
+    "ext": {
+      "title": "Extensión",
+      "content": "<p>La biblioteca como centro de interpretación que acorta la distancia entre la experiencia individual y el patrimonio colectivo.</p><h4>Articulación Local</h4><p>Conectamos con instituciones como CRESTA y actores locales para que la extensión se inscriba en la vida social y territorial.</p><h4>Zonas de Encuentro</h4><p>Espacios de superposición donde leer, hablar y producir se mezclan en tiempo real para generar pensamiento colectivo.</p>"
+    }
+  },
+  "docs": {
+    "title": "Documentación Completa",
+    "description": "Accede a la propuesta detallada en sus diferentes formatos.",
+    "links": [
+      {
+        "text": "Google Docs (Comentable)",
+        "url": "https://docs.google.com/document/d/1Gmh94PYu_XWk_nIKBLwaTtVi6HNYBQbEjLAJbTCw-_0/edit?usp=sharing"
+      },
+      {
+        "text": "Descargar PDF",
+        "url": "https://drive.google.com/file/d/1IYWa6XU1aj88Zf0t0NYEigbm4ybaQqGG/view?usp=sharing"
+      }
+    ]
+  },
+  "footer": {
+    "brand": "Punta Lectura | BEES10",
+    "school": "Escuela de Educación Secundaria Nº 10 - Claromecó",
+    "managerName": "Juan Pablo Salvaneschi",
+    "managerEmail": "jsalvane@gmail.com"
+  },
+  "hubTitles": {
+    "log": "Lo que pasó",
+    "upcoming": "Lo que viene"
+  }
+}
