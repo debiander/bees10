@@ -143,6 +143,40 @@
             .log-image { width: 100%; height: 200px; }
         }
         
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+        }
+        .page-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .page-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
         /* Hidden by default scrollbars */
         body::-webkit-scrollbar, main::-webkit-scrollbar, aside::-webkit-scrollbar { display: none; }
     </style>
@@ -186,18 +220,6 @@
 
         <div class="log-grid" id="log-grid">
             
-            <a href="upcoming/pjaros-en-la-boca-1777494998919.html" class="log-card" data-date="2026-05-05" data-tags="lectura,secuencias,artes,intervención">
-                <div>
-                    <div class="volanta">Una secuencia didáctica para leer a Samanta Schwebbin y a Eduardo Galeano</div>
-                    <h2>Pájaros en la boca</h2>
-                    <p>Una propuesta de siete fases destinada a estudiantes de cuarto año que busca romper la distancia tradicional con el texto literario mediante una "instalación inmersiva". 
-
-El objetivo primordial es ...</p>
-                    <div class="meta">4 de mayo de 2026 — 18 de junio de 2026</div>
-                </div>
-                <img src="/assets/log/2026-04-29/1777495432667.jpg" class="log-image">
-            </a>
-        
             <a href="upcoming/leer-en-comunidad-1777984351431.html" class="log-card" data-date="2026-05-29" data-tags="lectura,escritura,oralidad,edición,publicación,libro">
                 <div>
                     <div class="volanta">Descubrir la escritura literaria</div>
@@ -212,42 +234,121 @@ Como es algo...</p>
                 <img src="/assets/log/2026-05-05/1777984351359.jpg" class="log-image">
             </a>
         
+            <a href="upcoming/pjaros-en-la-boca-1777494998919.html" class="log-card" data-date="2026-05-05" data-tags="lectura,secuencias,artes,intervención">
+                <div>
+                    <div class="volanta">Una secuencia didáctica para leer a Samanta Schwebbin y a Eduardo Galeano</div>
+                    <h2>Pájaros en la boca</h2>
+                    <p>Una propuesta de siete fases destinada a estudiantes de cuarto año que busca romper la distancia tradicional con el texto literario mediante una "instalación inmersiva". 
+
+El objetivo primordial es ...</p>
+                    <div class="meta">4 de mayo de 2026 — 18 de junio de 2026</div>
+                </div>
+                <img src="/assets/log/2026-04-29/1777495432667.jpg" class="log-image">
+            </a>
+        
+        </div>
+
+        <div class="pagination" id="pagination-controls">
+            <!-- Pagination buttons will be injected here -->
         </div>
     </main>
 
     <script>
-        function filterByTime(range) {
-            const cards = document.querySelectorAll('.log-card');
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let activeRange = 'all';
+        let activeTag = 'all';
+
+        function getVisibleCards() {
+            const cards = Array.from(document.querySelectorAll('.log-card'));
             const now = new Date();
             
-            cards.forEach(card => {
+            return cards.filter(card => {
+                // Time filter
                 const date = new Date(card.dataset.date);
                 const diffDays = (date - now) / (1000 * 60 * 60 * 24); 
                 
-                let show = true;
-                if (range === 'day') show = Math.abs(diffDays) <= 1;
-                if (range === 'week') show = Math.abs(diffDays) <= 7;
-                if (range === 'month') show = Math.abs(diffDays) <= 30;
-                
-                card.style.display = show ? 'grid' : 'none';
+                let timeMatch = true;
+                if (activeRange === 'day') timeMatch = Math.abs(diffDays) <= 1;
+                else if (activeRange === 'week') timeMatch = Math.abs(diffDays) <= 7;
+                else if (activeRange === 'month') timeMatch = Math.abs(diffDays) <= 30;
+
+                // Tag filter
+                const tags = card.dataset.tags.split(',');
+                let tagMatch = (activeTag === 'all' || tags.includes(activeTag));
+
+                return timeMatch && tagMatch;
             });
+        }
+
+        function renderPage() {
+            const allCards = document.querySelectorAll('.log-card');
+            allCards.forEach(card => card.style.display = 'none');
+
+            const visibleCards = getVisibleCards();
+            const totalPages = Math.ceil(visibleCards.length / itemsPerPage);
             
-            updateActiveFilter(event.target);
+            // Adjust current page if out of bounds
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            const pageCards = visibleCards.slice(startIndex, endIndex);
+            pageCards.forEach(card => card.style.display = 'grid');
+
+            renderPaginationControls(totalPages);
+        }
+
+        function renderPaginationControls(totalPages) {
+            const controls = document.getElementById('pagination-controls');
+            if (!controls) return;
+
+            if (totalPages <= 1) {
+                controls.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            controls.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderPage();
+            document.querySelector('main').scrollTo(0, 0);
+        }
+
+        function filterByTime(range) {
+            activeRange = range;
+            currentPage = 1;
+            renderPage();
+            updateActiveFilter(event.target, 'time');
         }
 
         function filterByTag(tag) {
-            const cards = document.querySelectorAll('.log-card');
-            cards.forEach(card => {
-                const tags = card.dataset.tags.split(',');
-                card.style.display = (tag === 'all' || tags.includes(tag)) ? 'grid' : 'none';
-            });
-            updateActiveFilter(event.target);
+            activeTag = tag;
+            currentPage = 1;
+            renderPage();
+            updateActiveFilter(event.target, 'tag');
         }
 
-        function updateActiveFilter(el) {
-            document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
+        function updateActiveFilter(el, type) {
+            const section = el.closest('.filter-section');
+            if (section) {
+                section.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+                el.classList.add('active');
+            }
         }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPage();
+        });
     </script>
 </body>
 </html>
