@@ -83,6 +83,36 @@
             font-size: 0.8rem;
             color: var(--text-muted);
         }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+        .project-tag {
+            text-decoration: none;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .project-tag:hover {
+            background: var(--primary);
+            color: #000;
+        }
+        .project-tag.current {
+            background: var(--primary);
+            color: #000;
+            cursor: default;
+        }
         .links-section {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -127,6 +157,9 @@
         <div class="volanta">Descubrir la escritura literaria</div>
         <h1>Leer en comunidad</h1>
         <div class="meta" style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">28 de mayo de 2026</div>
+        
+        
+
         <img src="/assets/log/2026-05-05/1777984351359.jpg" class="main-image">
         <div class="content">La propuesta busca crear talleres de escritura creativa para chicas y chicos en el nivel secundario. 
 

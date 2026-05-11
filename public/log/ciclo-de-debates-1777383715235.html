@@ -83,6 +83,36 @@
             font-size: 0.8rem;
             color: var(--text-muted);
         }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+        .project-tag {
+            text-decoration: none;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .project-tag:hover {
+            background: var(--primary);
+            color: #000;
+        }
+        .project-tag.current {
+            background: var(--primary);
+            color: #000;
+            cursor: default;
+        }
         .links-section {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -127,6 +157,9 @@
         <div class="volanta">Una forma de impulsar la lectura, la escritura, la oralidad y la ciudadanía</div>
         <h1>Ciclo de debates</h1>
         <div class="meta" style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">28 de abril de 2026</div>
+        
+        
+
         <img src="/assets/log/2026-04-28/1777383715184.jpg" class="main-image">
         <div class="content">Comenzamos con la realización del ciclo de debates el jueves de la semana pasada. El tema fue: las situaciones de amenazas por tiroteo en las escuelas secundarias del país y su relación con las redes sociales y la tecnología. 
 

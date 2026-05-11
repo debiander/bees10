@@ -48,7 +48,7 @@
     "title": "La inflación en la Argentina",
     "volanta": "Jornada de debate",
     "content": "Empezamos a organizar el debate para el próximo viernes 22 de mayo, durante la tercera hora. ¿Quién se suma?\r\n\r\nTendremos que definir si sostenemos la realización en tres grupos o si cambiamos la metodología. Hay que definir fuentes de información y armar los guiones de debate...",
-    "date": "2026-05-22",
+    "date": "2026-04-30",
     "dateEnd": "",
     "tags": [
       "debates",
@@ -56,6 +56,26 @@
       "turismo"
     ],
     "links": [],
-    "image": "/assets/log/2026-05-05/1777990818910.jpg"
+    "image": "/assets/log/2026-05-05/1777990818910.jpg",
+    "projectId": "debates",
+    "pinned": false
+  },
+  {
+    "id": "1778506802767",
+    "title": "Organizando el debate del 22M",
+    "volanta": "Jornada de debate",
+    "content": "Estuvimos conversando con la profesora de Economía Política del 6A. Ella se va a encargar de seleccionar al menos tres fuentes de información sobre la tematica y también armará un campo semántico alrededor del concepto «inflación».\r\n\r\nCon ese campo semántico, desde la biblioteca vamos a armar un dispositivo visual e interactivo de información información que pondremos a disposición de estudiantes y docentes en la biblioteca. \r\n\r\nAcordamos que realizaríamos una encuesta durante esta semana entre las chicas y chicos para relevar un dato acerca de su conocimiento antes del debate.\r\n\r\nColocaremos en la galería durante la semana que viene varios afiches con qrs para acceder a las fuentes seleccionadas. \r\n\r\nInvitamos a 6A a funcionar como activadores/moderadores de los debates. \r\n\r\nDefinimos que esta vez habrá seis salones de debate, con estudiantes mezclados de todos los cursos/divisiones con un docente y dos estudiantes de 6A con el rol de activar la discusión.  ",
+    "date": "2026-05-11",
+    "dateEnd": "",
+    "projectId": "debates",
+    "pinned": false,
+    "tags": [
+      "debastes",
+      "economía",
+      "turismo",
+      "planificación"
+    ],
+    "links": [],
+    "image": "/assets/log/2026-05-11/1778506855419.jpg"
   }
 ]
