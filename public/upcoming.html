@@ -221,6 +221,18 @@
 
         <div class="log-grid" id="log-grid">
             
+            <a href="upcoming/pjaros-en-la-boca-1777494998919.html" class="log-card" data-date="2026-06-01" data-tags="lectura,secuencias,artes,intervención">
+                <div>
+                    <div class="volanta">Una secuencia didáctica para leer a Samanta Schwebbin y a Eduardo Galeano</div>
+                    <h2>Pájaros en la boca</h2>
+                    <p>Una propuesta de siete fases destinada a estudiantes de cuarto año que busca romper la distancia tradicional con el texto literario mediante una "instalación inmersiva". 
+
+El objetivo primordial es ...</p>
+                    <div class="meta">1 de junio de 2026</div>
+                </div>
+                <img src="/assets/log/2026-04-29/1777495432667.jpg" class="log-image">
+            </a>
+        
             <a href="upcoming/leer-en-comunidad-1777984351431.html" class="log-card" data-date="2026-05-29" data-tags="lectura,escritura,oralidad,edición,publicación,libro">
                 <div>
                     <div class="volanta">Descubrir la escritura literaria</div>
@@ -230,7 +242,7 @@
 Alto desafío, sobre todo si se piensan destinadas a todas y a todos por igual. 
 
 Como es algo...</p>
-                    <div class="meta">28 de mayo de 2026</div>
+                    <div class="meta">29 de mayo de 2026</div>
                 </div>
                 <img src="/assets/log/2026-05-05/1777984351359.jpg" class="log-image">
             </a>
@@ -240,21 +252,9 @@ Como es algo...</p>
                     <div class="volanta">Jornada de debate</div>
                     <h2>Organizando el debate del 22M</h2>
                     <p>Estuvimos conversando con la profesora de Economía Política del 6A. Ella se va a encargar de seleccionar al menos tres fuentes de información sobre la tematica y también armará un campo semántico alre...</p>
-                    <div class="meta">10 de mayo de 2026</div>
+                    <div class="meta">11 de mayo de 2026</div>
                 </div>
                 <img src="/assets/log/2026-05-11/1778506855419.jpg" class="log-image">
-            </a>
-        
-            <a href="upcoming/pjaros-en-la-boca-1777494998919.html" class="log-card" data-date="2026-05-05" data-tags="lectura,secuencias,artes,intervención">
-                <div>
-                    <div class="volanta">Una secuencia didáctica para leer a Samanta Schwebbin y a Eduardo Galeano</div>
-                    <h2>Pájaros en la boca</h2>
-                    <p>Una propuesta de siete fases destinada a estudiantes de cuarto año que busca romper la distancia tradicional con el texto literario mediante una "instalación inmersiva". 
-
-El objetivo primordial es ...</p>
-                    <div class="meta">4 de mayo de 2026 — 18 de junio de 2026</div>
-                </div>
-                <img src="/assets/log/2026-04-29/1777495432667.jpg" class="log-image">
             </a>
         
             <a href="upcoming/la-inflacin-en-la-argentina-1777990818962.html" class="log-card" data-date="2026-04-30" data-tags="debates,economía,turismo">
@@ -264,7 +264,7 @@ El objetivo primordial es ...</p>
                     <p>Empezamos a organizar el debate para el próximo viernes 22 de mayo, durante la tercera hora. ¿Quién se suma?
 
 Tendremos que definir si sostenemos la realización en tres grupos o si cambiamos la meto...</p>
-                    <div class="meta">29 de abril de 2026</div>
+                    <div class="meta">30 de abril de 2026</div>
                 </div>
                 <img src="/assets/log/2026-05-05/1777990818910.jpg" class="log-image">
             </a>
@@ -288,7 +288,14 @@ Tendremos que definir si sostenemos la realización en tres grupos o si cambiamo
             
             return cards.filter(card => {
                 // Time filter
-                const date = new Date(card.dataset.date);
+                const dateStr = card.dataset.date;
+                let date;
+                const ymdMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (ymdMatch) {
+                    date = new Date(ymdMatch[1], ymdMatch[2] - 1, ymdMatch[3]);
+                } else {
+                    date = new Date(dateStr);
+                }
                 const diffDays = (date - now) / (1000 * 60 * 60 * 24); 
                 
                 let timeMatch = true;

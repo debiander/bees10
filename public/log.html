@@ -250,7 +250,14 @@
             
             return cards.filter(card => {
                 // Time filter
-                const date = new Date(card.dataset.date);
+                const dateStr = card.dataset.date;
+                let date;
+                const ymdMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (ymdMatch) {
+                    date = new Date(ymdMatch[1], ymdMatch[2] - 1, ymdMatch[3]);
+                } else {
+                    date = new Date(dateStr);
+                }
                 const diffDays = (date - now) / (1000 * 60 * 60 * 24); 
                 
                 let timeMatch = true;
